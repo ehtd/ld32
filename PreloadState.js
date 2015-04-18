@@ -7,6 +7,8 @@ PreloadState.prototype.preload = function(){
     this.preloadBar = this.add.sprite(200, 400, 'preloaderBar');
     this.load.setPreloadSprite(this.preloadBar);
 
+    this.game.load.image('background', 'assets/map.png');
+    this.game.load.image('player', 'assets/player.png');
 }
 
 PreloadState.prototype.create = function(){

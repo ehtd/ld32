@@ -12,6 +12,7 @@ GameState.prototype.create = function(){
     console.log("Finish game");
 
     this.MAX_SPEED = 120;
+    this.CONTROL_RADIUS = 200;
 
     this.game.add.tileSprite(0,0,3000,2000, 'background');
     this.game.world.setBounds(0,0,3000,2000);
@@ -22,6 +23,8 @@ GameState.prototype.create = function(){
     this.player.body.collideWorldBounds = true;
 
     this.player.ducks = this.game.add.group();
+    this.player.ducks.enableBody = true;
+    this.player.ducks.physicsBodyType = Phaser.Physics.ARCADE;
 
     this.game.camera.follow(this.player);
 
@@ -36,14 +39,19 @@ GameState.prototype.create = function(){
         Phaser.Keyboard.RIGHT
     ]);
 
-    var NUMBER_OF_DUCKS = 10;
+    this.duck = new Duck(this.game, null, this.player.x + 50, this.player.y + 50);
+    this.game.add.existing(this.duck);
+
+    var NUMBER_OF_DUCKS = 0;
     var temp = this.player;
     for(var i = 0; i < NUMBER_OF_DUCKS; i++) {
-        var duck = new Duck(this.game, temp, 'duck');
+        var duck = new Duck(this.game, temp);
         this.player.ducks.add(duck);
         temp = duck;
         this.game.add.existing(duck);
     }
+
+    this.game.input.onDown.add(this.dropBread, this);
 
     versioning(this.game);
 }
@@ -71,10 +79,27 @@ GameState.prototype.update = function(){
         // Stop the player from moving horizontally
         this.player.body.velocity.x = 0;
     }
-
-
 }
 
 GameState.prototype.shutdown = function(){
 
+}
+
+GameState.prototype.render = function() {
+
+    this.game.debug.cameraInfo(this.game.camera, 32, 32);
+    this.game.debug.spriteCoords(this.player, 32, 500);
+
+    var circle = new Phaser.Circle(this.player.x, this.player.y, this.CONTROL_RADIUS ) ;
+    this.game.debug.geom( circle, 'rgba(255,255,0,0.3)' ) ;
+
+    this.duck.render();
+
+}
+
+GameState.prototype.dropBread = function(pointer) {
+    //var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
+    var bread = new Bread(this.game, this.player, this.player.x, this.player.y+40);
+    this.game.add.existing(bread);
+    this.player.bringToTop();
 }

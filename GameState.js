@@ -120,7 +120,6 @@ GameState.prototype.dropBread = function(pointer) {
 
     //TODO: All ducks?
     this.freeDucks.forEach(function(duck) {
-        duck.target = null;
         duck.assignZone(bread.x, bread.y);
     });
 }

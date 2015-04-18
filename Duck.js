@@ -95,10 +95,11 @@ Duck.prototype.assignZone = function(x, y) {
 
     var distance = this.game.math.distance(this.x, this.y, x, y);
 
-    if (distance < this.SEARCH_BREAD_DISTANCE){
+    if (distance < this.SEARCH_BREAD_DISTANCE && this.zoneAssigned == false){
         this.zoneX = x;
         this.zoneY = y;
         this.zoneAssigned = true;
+        this.target = null;
     }
 
 }

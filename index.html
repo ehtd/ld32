@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>A LD32 Game</title>
+    <script src="Constants.js"></script>
+    <script src="phaser.min.js"></script>
+    <script src="BootState.js"></script>
+    <script src="PreloadState.js"></script>
+    <script src="GameState.js"></script>
+
+
+</head>
+<body>
+
+    <script type="text/javascript">
+
+        window.onload = function() {
+
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer');
+
+        game.state.add(CONSTANT_STATES.GAME, GameState);
+        game.state.add(CONSTANT_STATES.BOOT, BootState);
+        game.state.add(CONSTANT_STATES.PRELOAD, PreloadState);
+
+        game.state.start(CONSTANT_STATES.BOOT);
+
+    };
+
+    </script>
+
+</body>
+</html>

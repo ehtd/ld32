@@ -21,6 +21,8 @@ GameState.prototype.create = function(){
     this.player.body.immovable = false;
     this.player.body.collideWorldBounds = true;
 
+    this.player.ducks = this.game.add.group();
+
     this.game.camera.follow(this.player);
 
     this.game.input.keyboard.addKeyCapture([
@@ -33,6 +35,15 @@ GameState.prototype.create = function(){
         Phaser.Keyboard.LEFT,
         Phaser.Keyboard.RIGHT
     ]);
+
+    var NUMBER_OF_DUCKS = 10;
+    var temp = this.player;
+    for(var i = 0; i < NUMBER_OF_DUCKS; i++) {
+        var duck = new Duck(this.game, temp, 'duck');
+        this.player.ducks.add(duck);
+        temp = duck;
+        this.game.add.existing(duck);
+    }
 
     versioning(this.game);
 }
@@ -61,10 +72,9 @@ GameState.prototype.update = function(){
         this.player.body.velocity.x = 0;
     }
 
+
 }
 
 GameState.prototype.shutdown = function(){
 
 }
-
-

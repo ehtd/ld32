@@ -9,6 +9,8 @@ PreloadState.prototype.preload = function(){
 
     this.game.load.image('background', 'assets/map.png');
     this.game.load.image('player', 'assets/player.png');
+    this.game.load.image('duck', 'assets/duck.png');
+
 }
 
 PreloadState.prototype.create = function(){

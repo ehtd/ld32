@@ -2,7 +2,6 @@
  * Created by ehtd on 4/18/15.
  */
 
-// Follower constructor
 var Duck = function(game, target, optionalX, optionalY) {
 
     if (target != null) {
@@ -21,16 +20,16 @@ var Duck = function(game, target, optionalX, optionalY) {
     this.physicsBodyType = Phaser.Physics.ARCADE;
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
-    this.MAX_SPEED = 120; // pixels/second
+    this.MAX_SPEED = 120;
     this.MAX_FOOD_SPEED = 260;
-    this.MIN_DISTANCE = 20; // pixels
-    this.SEARCH_BREAD_DISTANCE = 200;
+    this.MIN_DISTANCE = 10;
+    this.SEARCH_BREAD_DISTANCE = 400;
 
     this.zoneAssigned = false;
     this.bread = null;
 
-    this.randomX = this.game.rnd.integerInRange(-20, 20);
-    this.randomY = this.game.rnd.integerInRange(-20, 20);
+    this.randomX = this.game.rnd.integerInRange(-40, 40);
+    this.randomY = this.game.rnd.integerInRange(-40, 40);
 
 };
 
@@ -72,12 +71,10 @@ Duck.prototype.roam = function() {
     if (this.zoneAssigned) {
         var distance = this.game.math.distance(this.x, this.y, this.zoneX, this.zoneY);
 
-        //Move to zone
         if (distance > 6) {
             // Calculate the angle to the target
             var rotation = this.game.math.angleBetween(this.x, this.y, this.zoneX, this.zoneY);
 
-            // Calculate velocity vector based on rotation and this.MAX_SPEED
             this.body.velocity.x = Math.ceil(Math.cos(rotation) * this.MAX_FOOD_SPEED);
             this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_FOOD_SPEED);
         } else {

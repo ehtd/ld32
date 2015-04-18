@@ -53,22 +53,17 @@ GameState.prototype.create = function(){
         this.game.add.existing(duck);
         this.freeDucks.add(duck);
     }
-
-    //var NUMBER_OF_DUCKS = 0;
-    //var temp = this.player;
-    //for(var i = 0; i < NUMBER_OF_DUCKS; i++) {
-    //    var duck = new Duck(this.game, temp);
-    //    this.player.ducks.add(duck);
-    //    temp = duck;
-    //    this.game.add.existing(duck);
-    //}
-
+    
     this.game.input.onDown.add(this.dropBread, this);
 
     versioning(this.game);
 }
 
 GameState.prototype.update = function(){
+
+    this.game.physics.arcade.overlap(this.freeDucks, this.breads, function(duck, bread){
+        this.breads.remove(bread);
+    }, null, this);
 
     if (this.input.keyboard.isDown(Phaser.Keyboard.W) || this.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 
@@ -118,7 +113,6 @@ GameState.prototype.dropBread = function(pointer) {
     this.breads.add(bread);
     this.player.bringToTop();
 
-    //TODO: All ducks?
     this.freeDucks.forEach(function(duck) {
         duck.assignZone(bread.x, bread.y);
     });

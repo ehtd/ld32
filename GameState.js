@@ -30,7 +30,6 @@ GameState.prototype.create = function(){
 
     this.game.camera.follow(this.player);
 
-    //TODO: In use?
     this.breads = this.game.add.group();
 
     this.freeDucks = this.game.add.group();
@@ -46,14 +45,8 @@ GameState.prototype.create = function(){
         Phaser.Keyboard.RIGHT
     ]);
 
-    var NUMBER_OF_FREE_DUCKS = 50;
-    var temp = this.player;
-    for(var i = 0; i < NUMBER_OF_FREE_DUCKS; i++) {
-        var duck = new Duck(this.game, null, this.player.x + 50 * i, this.player.y + 50 * i);
-        this.game.add.existing(duck);
-        this.freeDucks.add(duck);
-    }
-    
+    this.addDucks();
+
     this.game.input.onDown.add(this.dropBread, this);
 
     versioning(this.game);
@@ -116,4 +109,18 @@ GameState.prototype.dropBread = function(pointer) {
     this.freeDucks.forEach(function(duck) {
         duck.assignZone(bread.x, bread.y);
     });
+}
+
+GameState.prototype.addDucks = function() {
+    var NUMBER_OF_FREE_DUCKS = 300;
+    var temp = this.player;
+    for(var i = 0; i < NUMBER_OF_FREE_DUCKS; i++) {
+
+        var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);
+        var randomY = this.game.rnd.integerInRange(6, this.game.world.bounds.height - 6);
+
+        var duck = new Duck(this.game, null, randomX, randomY);
+        this.game.add.existing(duck);
+        this.freeDucks.add(duck);
+    }
 }

@@ -30,7 +30,9 @@ GameState.prototype.create = function(){
 
     this.game.camera.follow(this.player);
 
+    //TODO: In use?
     this.breads = this.game.add.group();
+
     this.freeDucks = this.game.add.group();
 
     this.game.input.keyboard.addKeyCapture([
@@ -51,10 +53,6 @@ GameState.prototype.create = function(){
         this.game.add.existing(duck);
         this.freeDucks.add(duck);
     }
-
-    //var duck = new Duck(this.game, null, this.player.x + 50, this.player.y + 50);
-    //this.game.add.existing(duck);
-    //this.freeDucks.add(duck);
 
     //var NUMBER_OF_DUCKS = 0;
     //var temp = this.player;
@@ -114,15 +112,15 @@ GameState.prototype.render = function() {
 }
 
 GameState.prototype.dropBread = function(pointer) {
-    //var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
-    var bread = new Bread(this.game, this.player, this.player.x, this.player.y+40);
+    var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
+
     this.game.add.existing(bread);
     this.breads.add(bread);
     this.player.bringToTop();
 
     //TODO: All ducks?
     this.freeDucks.forEach(function(duck) {
+        duck.target = null;
         duck.assignZone(bread.x, bread.y);
     });
-
 }

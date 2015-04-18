@@ -46,10 +46,10 @@ GameState.prototype.create = function(){
         Phaser.Keyboard.RIGHT
     ]);
 
-    var NUMBER_OF_FREE_DUCKS = 3;
+    var NUMBER_OF_FREE_DUCKS = 50;
     var temp = this.player;
     for(var i = 0; i < NUMBER_OF_FREE_DUCKS; i++) {
-        var duck = new Duck(this.game, null, this.player.x + 50+ i, this.player.y + 50 + i);
+        var duck = new Duck(this.game, null, this.player.x + 50 * i, this.player.y + 50 * i);
         this.game.add.existing(duck);
         this.freeDucks.add(duck);
     }
@@ -103,8 +103,8 @@ GameState.prototype.render = function() {
     this.game.debug.cameraInfo(this.game.camera, 32, 32);
     this.game.debug.spriteCoords(this.player, 32, 500);
 
-    var circle = new Phaser.Circle(this.player.x, this.player.y, this.CONTROL_RADIUS ) ;
-    this.game.debug.geom( circle, 'rgba(255,255,0,0.3)' ) ;
+    //var circle = new Phaser.Circle(this.player.x, this.player.y, this.CONTROL_RADIUS ) ;
+    //this.game.debug.geom( circle, 'rgba(255,255,0,0.3)' ) ;
 
     this.freeDucks.forEach(function(duck) {
         duck.render();

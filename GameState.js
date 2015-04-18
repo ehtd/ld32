@@ -26,7 +26,12 @@ GameState.prototype.create = function(){
     this.player.ducks.enableBody = true;
     this.player.ducks.physicsBodyType = Phaser.Physics.ARCADE;
 
+    this.game.playerReference = this.player;
+
     this.game.camera.follow(this.player);
+
+    this.breads = this.game.add.group();
+    this.freeDucks = this.game.add.group();
 
     this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.W,
@@ -39,17 +44,26 @@ GameState.prototype.create = function(){
         Phaser.Keyboard.RIGHT
     ]);
 
-    this.duck = new Duck(this.game, null, this.player.x + 50, this.player.y + 50);
-    this.game.add.existing(this.duck);
-
-    var NUMBER_OF_DUCKS = 0;
+    var NUMBER_OF_FREE_DUCKS = 3;
     var temp = this.player;
-    for(var i = 0; i < NUMBER_OF_DUCKS; i++) {
-        var duck = new Duck(this.game, temp);
-        this.player.ducks.add(duck);
-        temp = duck;
+    for(var i = 0; i < NUMBER_OF_FREE_DUCKS; i++) {
+        var duck = new Duck(this.game, null, this.player.x + 50+ i, this.player.y + 50 + i);
         this.game.add.existing(duck);
+        this.freeDucks.add(duck);
     }
+
+    //var duck = new Duck(this.game, null, this.player.x + 50, this.player.y + 50);
+    //this.game.add.existing(duck);
+    //this.freeDucks.add(duck);
+
+    //var NUMBER_OF_DUCKS = 0;
+    //var temp = this.player;
+    //for(var i = 0; i < NUMBER_OF_DUCKS; i++) {
+    //    var duck = new Duck(this.game, temp);
+    //    this.player.ducks.add(duck);
+    //    temp = duck;
+    //    this.game.add.existing(duck);
+    //}
 
     this.game.input.onDown.add(this.dropBread, this);
 
@@ -79,6 +93,7 @@ GameState.prototype.update = function(){
         // Stop the player from moving horizontally
         this.player.body.velocity.x = 0;
     }
+
 }
 
 GameState.prototype.shutdown = function(){
@@ -93,13 +108,21 @@ GameState.prototype.render = function() {
     var circle = new Phaser.Circle(this.player.x, this.player.y, this.CONTROL_RADIUS ) ;
     this.game.debug.geom( circle, 'rgba(255,255,0,0.3)' ) ;
 
-    this.duck.render();
-
+    this.freeDucks.forEach(function(duck) {
+        duck.render();
+    });
 }
 
 GameState.prototype.dropBread = function(pointer) {
     //var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
     var bread = new Bread(this.game, this.player, this.player.x, this.player.y+40);
     this.game.add.existing(bread);
+    this.breads.add(bread);
     this.player.bringToTop();
+
+    //TODO: All ducks?
+    this.freeDucks.forEach(function(duck) {
+        duck.assignZone(bread.x, bread.y);
+    });
+
 }

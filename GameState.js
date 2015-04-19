@@ -78,7 +78,13 @@ GameState.prototype.create = function(){
         align: "center"
     });
     this.ownedDucksText.fixedToCamera = true;
-    
+
+    var monster = this.game.add.sprite(10, 10, 'monster');
+    monster.fixedToCamera = true;
+
+    var duckIcon = this.game.add.sprite(12, 60, 'duckIcon');
+    duckIcon.fixedToCamera = true;
+
     this.player.events.onKilled.add(function(player) {
         player.ducks.forEach(function(duck){
             if (duck.hasOwner) {

@@ -1,4 +1,4 @@
-var VERSION = "v. 0.1.0";
+var VERSION = "v. 0.2.0";
 
 var CONSTANT_STATES = {
     GAME:'GameState',

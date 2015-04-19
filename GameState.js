@@ -53,6 +53,7 @@ GameState.prototype.create = function(){
     this.breads = this.game.add.group();
 
     this.freeDucks = this.game.add.group();
+    this.game.ducksReference = this.freeDucks;
 
     this.enemies = this.game.add.group();
 

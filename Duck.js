@@ -13,6 +13,7 @@ var Duck = function(game, target, optionalX, optionalY) {
     }
 
     this.target = target;
+    this.scared = false;
 
     this.anchor.setTo(0.5, 0.5);
 
@@ -124,15 +125,20 @@ Duck.prototype.roam = function() {
             this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_FOOD_SPEED);
         } else {
 
-            this.randomPose = this.game.rnd.integerInRange(0, 3);
-            this.animations.play(this.animationNames[this.alternatePose]);
+            if (this.scared) {
+                this.game.ducksReference.remove(this);
+            } else {
+                this.randomPose = this.game.rnd.integerInRange(0, 3);
+                this.animations.play(this.animationNames[this.alternatePose]);
 
-            this.body.velocity.setTo(0, 0);
-            this.zoneX = 0;
-            this.zoneY = 0;
-            this.target = this.game.playerReference;
-            this.zoneAssigned = false;
-            this.hasOwner = true;
+                this.body.velocity.setTo(0, 0);
+                this.zoneX = 0;
+                this.zoneY = 0;
+                this.target = this.game.playerReference;
+                this.zoneAssigned = false;
+                this.hasOwner = true;
+            }
+
         }
     }
 }
@@ -147,5 +153,18 @@ Duck.prototype.assignZone = function(x, y) {
         this.zoneAssigned = true;
         this.target = null;
     }
+
+}
+
+Duck.prototype.flee = function(x, y) {
+    this.scared = true;
+
+    this.MAX_FOOD_SPEED = 500;
+
+    this.hasOwner = false;
+    this.target = null
+    this.zoneX = this.x;
+    this.zoneY = -100;
+    this.zoneAssigned = true;
 
 }

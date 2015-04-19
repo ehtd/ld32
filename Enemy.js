@@ -51,9 +51,12 @@ Enemy.prototype.update = function() {
     this.game.physics.arcade.overlap(this.game.playerReference, this.attacks, function(player, ball){
         ball.kill();
         this.game.playerReference.kill();
-        //TODO: END GAME
-
     }, null, this);
+
+    this.game.physics.arcade.overlap(this.game.ducksReference, this.attacks, function(duck, ball){
+        duck.flee();
+    }, null, this);
+
 
     if (this.target != null) {
 
@@ -97,7 +100,7 @@ Enemy.prototype.render = function() {
 
 Enemy.prototype.attack = function() {
 
-    if (this.attacks.countLiving() < this.maxAttacks){
+    if (this.attacks.countLiving() < this.maxAttacks && this.game.playerReference.alive ){
         var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 200);
         this.game.add.existing(ball);
         this.attacks.add(ball);

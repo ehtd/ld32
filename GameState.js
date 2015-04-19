@@ -161,6 +161,8 @@ GameState.prototype.update = function(){
         }
     }
 
+    this.enemies.sort('y', Phaser.Group.SORT_ASCENDING);
+
     this.updateDuckStatus();
 
 }
@@ -220,7 +222,7 @@ GameState.prototype.addDucks = function() {
 }
 
 GameState.prototype.addEnemies = function() {
-    var NUMBER_OF_ENEMIES = 2;
+    var NUMBER_OF_ENEMIES = 10;
     for(var i = 0; i < NUMBER_OF_ENEMIES; i++) {
 
         var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);

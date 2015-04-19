@@ -93,7 +93,7 @@ Enemy.prototype.render = function() {
 
     var maxSize = 100;
     var barWidth = (this.HP*maxSize)/(this.MAX_HP);
-    var hpBar = new Phaser.Rectangle(this.x - this.width, this.y + this.height/2 + 10 , barWidth, 4);
+    var hpBar = new Phaser.Rectangle(this.x - this.width +10, this.y + this.height/2 + 10 , barWidth, 4);
     //var circle = new Phaser.Circle(this.x, this.y, this.SEARCH_BREAD_DISTANCE*2 ) ;
     this.game.debug.geom( hpBar, 'rgba(255,0,0,0.3)' );
 }

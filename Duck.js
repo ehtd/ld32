@@ -58,6 +58,8 @@ var Duck = function(game, target, optionalX, optionalY) {
     this.animations.add('e3', [2], 0, 1);
     this.animations.add('e4', [3], 0, 1);
 
+    this.animations.add('scared', [1], 8, 1);
+
     this.animationNames = ['e1','e2','e3','e4'];
 
     this.pose = this.game.rnd.integerInRange(0, 3);
@@ -160,6 +162,7 @@ Duck.prototype.flee = function(x, y) {
     this.scared = true;
 
     this.MAX_FOOD_SPEED = 500;
+    this.animations.play('scared');
 
     this.hasOwner = false;
     this.target = null

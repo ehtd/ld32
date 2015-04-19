@@ -21,10 +21,13 @@ var Ball = function(game, target, x, y, speed) {
 
     explode.onComplete.add(function(sprite, animation) {
         //PLay sound
+        this.killed.play();
         this.kill();
     }, this);
 
     this.animations.play('rotate');
+
+    this.killed = this.game.add.audio('explode', 1, false);
 
 };
 

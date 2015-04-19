@@ -103,6 +103,8 @@ GameState.prototype.create = function(){
         player.gameReference.state.start(CONSTANT_STATES.DEFEAT);
     });
 
+    this.quackSound = this.game.add.audio('quack', 1, false);
+
     versioning(this.game);
 }
 
@@ -208,6 +210,9 @@ GameState.prototype.render = function() {
 GameState.prototype.dropBread = function(pointer) {
 
     if (this.player.alive) {
+
+        this.quackSound.play();
+
         var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
 
         this.player.throwingBread = true;

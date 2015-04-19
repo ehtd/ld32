@@ -108,6 +108,13 @@ GameState.prototype.create = function(){
 
 GameState.prototype.update = function(){
 
+    if (this.enemies.countLiving() == 0 ){
+
+        //TODO: may want to delay the victory
+        this.game.state.start(CONSTANT_STATES.VICTORY);
+        return;
+    }
+
     this.game.physics.arcade.overlap(this.freeDucks, this.breads, function(duck, bread){
         this.breads.remove(bread);
     }, null, this);

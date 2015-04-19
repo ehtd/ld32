@@ -5,7 +5,8 @@ var CONSTANT_STATES = {
     BOOT:'BootState',
     PRELOAD:'PreloadState',
     DEFEAT:'DefeatState',
-    START:'StartState'
+    START:'StartState',
+    VICTORY:'VictoryState'
 };
 
 versioning = function(game){

@@ -14,6 +14,7 @@
     <script src="Ball.js"></script>
     <script src="DefeatState.js"></script>
     <script src="StartState.js"></script>
+    <script src="VictoryState.js"></script>
 </head>
 <body>
 
@@ -28,6 +29,8 @@
         game.state.add(CONSTANT_STATES.PRELOAD, PreloadState);
         game.state.add(CONSTANT_STATES.DEFEAT, DefeatState);
         game.state.add(CONSTANT_STATES.START, StartState);
+        game.state.add(CONSTANT_STATES.VICTORY, VictoryState);
+
         game.state.start(CONSTANT_STATES.BOOT);
 
     };

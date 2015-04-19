@@ -42,10 +42,6 @@ GameState.prototype.create = function(){
 
     this.player.animations.play('stop');
 
-    this.player.ducks = this.game.add.group();
-    this.player.ducks.enableBody = true;
-    this.player.ducks.physicsBodyType = Phaser.Physics.ARCADE;
-
     this.game.playerReference = this.player;
 
     this.game.camera.follow(this.player);
@@ -54,6 +50,7 @@ GameState.prototype.create = function(){
 
     this.freeDucks = this.game.add.group();
     this.game.ducksReference = this.freeDucks;
+    this.player.ducks = this.freeDucks;
 
     this.enemies = this.game.add.group();
 
@@ -93,6 +90,14 @@ GameState.prototype.create = function(){
         align: "center"
     });
     this.remainingDucksText.fixedToCamera = true;
+
+    this.player.events.onKilled.add(function(player) {
+        player.ducks.forEach(function(duck){
+            if (duck.hasOwner) {
+                duck.flee();
+            }
+        });
+    });
 
     versioning(this.game);
 }

@@ -53,10 +53,10 @@ Enemy.prototype.update = function() {
         this.game.playerReference.kill();
     }, null, this);
 
-    this.game.physics.arcade.overlap(this.game.ducksReference, this.attacks, function(duck, ball){
-        duck.flee();
-    }, null, this);
-
+    //TODO: Reconsider if ducks can flee is hit
+    //this.game.physics.arcade.overlap(this.game.ducksReference, this.attacks, function(duck, ball){
+    //    duck.flee();
+    //}, null, this);
 
     if (this.target != null) {
 
@@ -96,12 +96,13 @@ Enemy.prototype.render = function() {
     var hpBar = new Phaser.Rectangle(this.x - this.width +10, this.y + this.height/2 + 10 , barWidth, 4);
     //var circle = new Phaser.Circle(this.x, this.y, this.SEARCH_BREAD_DISTANCE*2 ) ;
     this.game.debug.geom( hpBar, 'rgba(255,0,0,0.3)' );
+
 }
 
 Enemy.prototype.attack = function() {
 
     if (this.attacks.countLiving() < this.maxAttacks && this.game.playerReference.alive ){
-        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 200);
+        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 40);
         this.game.add.existing(ball);
         this.attacks.add(ball);
     }

@@ -27,7 +27,7 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
     this.HP = this.MAX_HP;
 
     this.animations.add('walk', [0,1,2,3], 8, 1);
-    var attackAnimation = this.animations.add('attack', [0], 8, false);
+    var attackAnimation = this.animations.add('attack', [4,5,6], 8, false);
 
     attackAnimation.onComplete.add(function(sprite, animation){
         this.attacking = false;
@@ -108,7 +108,7 @@ Enemy.prototype.render = function() {
 Enemy.prototype.attack = function() {
 
     if (this.attacks.countLiving() < this.maxAttacks && this.game.playerReference.alive ){
-        var ball = new Ball(this.game, this.game.playerReference, this.x - 8, this.y - 42, 120);
+        var ball = new Ball(this.game, this.game.playerReference, this.x - 8, this.y - 48, 120);
         this.game.add.existing(ball);
         this.attacks.add(ball);
     }

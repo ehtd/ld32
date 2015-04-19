@@ -71,14 +71,7 @@ GameState.prototype.create = function(){
     this.addEnemies();
 
     this.game.input.onDown.add(this.dropBread, this);
-
-    this.ownedDucksText = this.game.add.text(40, 110, "My Ducks: 0", {
-        font: "12px Arial",
-        fill: "#ff0044",
-        align: "center"
-    });
-    this.ownedDucksText.fixedToCamera = true;
-
+    
     var monster = this.game.add.sprite(10, 10, 'monster');
     monster.fixedToCamera = true;
 
@@ -99,6 +92,14 @@ GameState.prototype.create = function(){
     this.loop = this.game.add.audio('loop', 1, true);
     this.loop.play();
 
+    this.monsterIndicator = this.game.add.bitmapText(30, 17, 'font', 'x '+this.enemies.countLiving(), 20);
+    this.monsterIndicator.fixedToCamera = true;
+
+    this.myDucks = 0;
+
+    this.duckIndicator = this.game.add.bitmapText(30, 54, 'font', 'x '+this.myDucks, 20);
+    this.duckIndicator.fixedToCamera = true;
+
     versioning(this.game);
 }
 
@@ -110,6 +111,9 @@ GameState.prototype.update = function(){
         this.game.state.start(CONSTANT_STATES.VICTORY);
         return;
     }
+
+    this.monsterIndicator.setText('x '+this.enemies.countLiving());
+    this.duckIndicator.setText('x '+this.myDucks);
 
     this.game.physics.arcade.overlap(this.freeDucks, this.breads, function(duck, bread){
         this.breads.remove(bread);
@@ -259,5 +263,5 @@ GameState.prototype.updateDuckStatus = function() {
 
     });
 
-    this.ownedDucksText.setText("My Ducks: "+ ownedDucks);
+    this.myDucks = ownedDucks;
 }

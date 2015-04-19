@@ -25,6 +25,8 @@ PreloadState.prototype.preload = function(){
     this.game.load.audio('zap', 'music/zap.mp3');
     this.game.load.audio('loop', 'music/loop.mp3');
 
+    this.game.load.bitmapFont('font', 'font.png', 'font.fnt');
+
 }
 
 PreloadState.prototype.create = function(){

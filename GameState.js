@@ -56,6 +56,27 @@ GameState.prototype.create = function(){
 
     this.game.input.onDown.add(this.dropBread, this);
 
+    this.ownedDucksText = this.game.add.text(40, 110, "My Ducks: 0", {
+        font: "12px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+    this.ownedDucksText.fixedToCamera = true;
+
+    this.otherDucksText = this.game.add.text(40, 130, "Other Ducks: 0", {
+        font: "12px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+    this.otherDucksText.fixedToCamera = true;
+
+    this.remainingDucksText = this.game.add.text(40, 150, "Remaining Ducks: 0", {
+        font: "12px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
+    this.remainingDucksText.fixedToCamera = true;
+
     versioning(this.game);
 }
 
@@ -113,6 +134,9 @@ GameState.prototype.update = function(){
     } else {
         this.player.animations.play('stop');
     }
+
+    this.updateDuckStatus();
+
 }
 
 GameState.prototype.shutdown = function(){
@@ -134,6 +158,7 @@ GameState.prototype.render = function() {
     this.enemies.forEach(function(enemy) {
         enemy.render();
     });
+
 }
 
 GameState.prototype.dropBread = function(pointer) {
@@ -173,4 +198,26 @@ GameState.prototype.addEnemies = function() {
         this.game.add.existing(enemy);
         this.enemies.add(enemy);
     }
+}
+
+GameState.prototype.updateDuckStatus = function() {
+
+    var freeDucks = 0;
+    var aliveDucks = 0;
+    var ownedDucks = 0;
+
+    this.freeDucks.forEach(function(duck){
+        if (duck.hasOwner) {
+            ownedDucks++;
+        } else {
+            freeDucks++;
+        }
+
+        aliveDucks++;
+
+    });
+
+    this.ownedDucksText.setText("My Ducks: "+ ownedDucks);
+    this.otherDucksText.setText("Other Ducks: "+ freeDucks);
+    this.remainingDucksText.setText("Remaining Ducks: "+ aliveDucks);
 }

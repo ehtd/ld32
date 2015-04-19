@@ -43,6 +43,8 @@ var Duck = function(game, target, optionalX, optionalY) {
 
     this.animations.play(this.animationNames[this.pose]);
 
+    this.hasOwner = false;
+
 };
 
 Duck.prototype = Object.create(Phaser.Sprite.prototype);
@@ -109,6 +111,7 @@ Duck.prototype.roam = function() {
             this.zoneY = 0;
             this.target = this.game.playerReference;
             this.zoneAssigned = false;
+            this.hasOwner = true;
         }
     }
 }

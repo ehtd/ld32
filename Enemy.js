@@ -41,12 +41,17 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
     this.maxAttacks = 3;
     this.attacks = this.game.add.group();
 
+    this.overlapped = false;
+
+
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.update = function() {
+
+    this.tintEnemy();
 
     this.game.physics.arcade.overlap(this.game.playerReference, this.attacks, function(player, ball){
         ball.animations.play('explode');
@@ -87,6 +92,7 @@ Enemy.prototype.update = function() {
 
     }
 
+    this.overlapped = false;
 };
 
 Enemy.prototype.render = function() {
@@ -108,3 +114,15 @@ Enemy.prototype.attack = function() {
     }
 
 }
+
+Enemy.prototype.tintEnemy = function() {
+
+    if (this.overlapped){
+        this.tint = 0xff0000;
+    } else {
+        this.tint = 0xffffff;
+    }
+
+
+}
+

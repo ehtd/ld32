@@ -121,10 +121,12 @@ GameState.prototype.update = function(){
         this.breads.remove(bread);
     }, null, this);
 
+
     this.game.physics.arcade.overlap(this.freeDucks, this.enemies, function(duck, enemy){
         if (duck.target != null) {
             enemy.HP -= 1;
 
+            enemy.overlapped = true
             if (enemy.HP <= 0) {
                 this.enemies.remove(enemy);
 

@@ -108,7 +108,7 @@ Enemy.prototype.render = function() {
 Enemy.prototype.attack = function() {
 
     if (this.attacks.countLiving() < this.maxAttacks && this.game.playerReference.alive ){
-        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 120);
+        var ball = new Ball(this.game, this.game.playerReference, this.x - 8, this.y - 42, 120);
         this.game.add.existing(ball);
         this.attacks.add(ball);
     }

@@ -71,7 +71,7 @@ GameState.prototype.create = function(){
     this.addEnemies();
 
     this.game.input.onDown.add(this.dropBread, this);
-    
+
     var monster = this.game.add.sprite(10, 10, 'monster');
     monster.fixedToCamera = true;
 
@@ -229,19 +229,19 @@ GameState.prototype.addDucks = function() {
 
 GameState.prototype.addEnemies = function() {
 
-    var enemy = new Enemy(this.game, this.player, 0, 0 , 40);
+    var enemy = new Enemy(this.game, this.player, 0, 0 , 80);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, 0, 40);
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, 0, 80);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, 0, this.game.world.bounds.height, 40);
+    enemy = new Enemy(this.game, this.player, 0, this.game.world.bounds.height, 80);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, this.game.world.bounds.height, 40);
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, this.game.world.bounds.height, 80);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 }

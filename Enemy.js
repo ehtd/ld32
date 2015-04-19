@@ -23,7 +23,7 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
     this.MAX_SPEED = speed;
     this.MIN_DISTANCE = 4;
     this.MIN_DISTANCE_ATTACK = 200;
-    this.MAX_HP = 100000;
+    this.MAX_HP = 50000;
     this.HP = this.MAX_HP;
 
     this.animations.add('walk', [0,1,2,3], 8, 1);
@@ -38,7 +38,7 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
 
     this.attacking = false;
 
-    this.maxAttacks = 10;
+    this.maxAttacks = 20;
     this.attacks = this.game.add.group();
 
     this.overlapped = false;

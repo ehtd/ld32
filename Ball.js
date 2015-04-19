@@ -7,7 +7,7 @@ var Ball = function(game, target, x, y, speed) {
     Phaser.Sprite.call(this, game, x, y, 'ball');
     this.target = target;
 
-    this.SPREAD_DISTANCE = 100;
+    this.SPREAD_DISTANCE = 300;
 
     this.targetX = this.game.rnd.integerInRange(this.target.x - this.SPREAD_DISTANCE, this.target.x + this.SPREAD_DISTANCE);
     this.targetY = this.game.rnd.integerInRange(this.target.y - this.SPREAD_DISTANCE, this.target.y + this.SPREAD_DISTANCE);

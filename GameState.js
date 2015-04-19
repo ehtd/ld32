@@ -229,19 +229,19 @@ GameState.prototype.addDucks = function() {
 
 GameState.prototype.addEnemies = function() {
 
-    var enemy = new Enemy(this.game, this.player, 0, 0 , 80);
+    var enemy = new Enemy(this.game, this.player, 0, 0 , 60);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, 0, 80);
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, 0, 60);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, 0, this.game.world.bounds.height, 80);
+    enemy = new Enemy(this.game, this.player, 0, this.game.world.bounds.height, 60);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 
-    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, this.game.world.bounds.height, 80);
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, this.game.world.bounds.height, 60);
     this.game.add.existing(enemy);
     this.enemies.add(enemy);
 }

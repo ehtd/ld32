@@ -22,6 +22,10 @@ GameState.prototype.create = function(){
     this.player.body.immovable = false;
     this.player.body.collideWorldBounds = true;
 
+    this.player.animations.add('walk', [0,1,2,3], 8, 1);
+    this.player.animations.add('stop', [0], 8, 1);
+    this.player.animations.play('stop');
+
     this.player.ducks = this.game.add.group();
     this.player.ducks.enableBody = true;
     this.player.ducks.physicsBodyType = Phaser.Physics.ARCADE;
@@ -67,15 +71,20 @@ GameState.prototype.update = function(){
 
             if (enemy.HP <= 0) {
                 this.enemies.remove(enemy);
+
+                //TODO: WIN GAME
             }
         }
     }, null, this);
 
-    //this.game.physics.arcade.collide(this.freeDucks, function(duck){
-    //    if (duck.target != null) {
-    //        this.enemies.remove(enemy);
-    //    }
-    //}, null, this);
+
+    this.game.physics.arcade.overlap(this.player, this.enemies, function(player, enemy){
+        player.kill();
+
+        //TODO: END GAME
+
+    }, null, this);
+
 
     if (this.input.keyboard.isDown(Phaser.Keyboard.W) || this.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 
@@ -99,6 +108,11 @@ GameState.prototype.update = function(){
         this.player.body.velocity.x = 0;
     }
 
+    if (this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0){
+        this.player.animations.play('walk');
+    } else {
+        this.player.animations.play('stop');
+    }
 }
 
 GameState.prototype.shutdown = function(){

@@ -78,21 +78,7 @@ GameState.prototype.create = function(){
         align: "center"
     });
     this.ownedDucksText.fixedToCamera = true;
-
-    this.otherDucksText = this.game.add.text(40, 130, "Other Ducks: 0", {
-        font: "12px Arial",
-        fill: "#ff0044",
-        align: "center"
-    });
-    this.otherDucksText.fixedToCamera = true;
-
-    this.remainingDucksText = this.game.add.text(40, 150, "Remaining Ducks: 0", {
-        font: "12px Arial",
-        fill: "#ff0044",
-        align: "center"
-    });
-    this.remainingDucksText.fixedToCamera = true;
-
+    
     this.player.events.onKilled.add(function(player) {
         player.ducks.forEach(function(duck){
             if (duck.hasOwner) {
@@ -131,8 +117,6 @@ GameState.prototype.update = function(){
             enemy.overlapped = true
             if (enemy.HP <= 0) {
                 this.enemies.remove(enemy);
-
-                //TODO: WIN GAME
             }
         }
     }, null, this);
@@ -140,9 +124,6 @@ GameState.prototype.update = function(){
 
     this.game.physics.arcade.overlap(this.player, this.enemies, function(player, enemy){
         player.kill();
-
-        //TODO: END GAME
-
     }, null, this);
 
 
@@ -195,16 +176,6 @@ GameState.prototype.shutdown = function(){
 
 GameState.prototype.render = function() {
 
-    this.game.debug.cameraInfo(this.game.camera, 32, 32);
-    this.game.debug.spriteCoords(this.player, 32, 500);
-
-    //var circle = new Phaser.Circle(this.player.x, this.player.y, this.CONTROL_RADIUS ) ;
-    //this.game.debug.geom( circle, 'rgba(255,255,0,0.3)' ) ;
-
-    this.freeDucks.forEach(function(duck) {
-        duck.render();
-    });
-
     this.enemies.forEach(function(enemy) {
         enemy.render();
     });
@@ -247,16 +218,22 @@ GameState.prototype.addDucks = function() {
 }
 
 GameState.prototype.addEnemies = function() {
-    var NUMBER_OF_ENEMIES = 4;
-    for(var i = 0; i < NUMBER_OF_ENEMIES; i++) {
 
-        var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);
-        var randomY = this.game.rnd.integerInRange(6, this.game.world.bounds.height - 6);
+    var enemy = new Enemy(this.game, this.player, 0, 0 , 40);
+    this.game.add.existing(enemy);
+    this.enemies.add(enemy);
 
-        var enemy = new Enemy(this.game, this.player, randomX, randomY, 40);
-        this.game.add.existing(enemy);
-        this.enemies.add(enemy);
-    }
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, 0, 40);
+    this.game.add.existing(enemy);
+    this.enemies.add(enemy);
+
+    enemy = new Enemy(this.game, this.player, 0, this.game.world.bounds.height, 40);
+    this.game.add.existing(enemy);
+    this.enemies.add(enemy);
+
+    enemy = new Enemy(this.game, this.player, this.game.world.bounds.width, this.game.world.bounds.height, 40);
+    this.game.add.existing(enemy);
+    this.enemies.add(enemy);
 }
 
 GameState.prototype.updateDuckStatus = function() {
@@ -277,6 +254,4 @@ GameState.prototype.updateDuckStatus = function() {
     });
 
     this.ownedDucksText.setText("My Ducks: "+ ownedDucks);
-    this.otherDucksText.setText("Other Ducks: "+ freeDucks);
-    this.remainingDucksText.setText("Remaining Ducks: "+ aliveDucks);
 }

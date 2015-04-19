@@ -25,6 +25,8 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
     this.MAX_HP = 100000;
     this.HP = this.MAX_HP;
 
+    this.animations.add('walk', [0,1,2,3], 8, 1);
+    this.animations.play('walk');
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);

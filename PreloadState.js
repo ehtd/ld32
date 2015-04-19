@@ -11,7 +11,7 @@ PreloadState.prototype.preload = function(){
     this.game.load.image('player', 'assets/player.png');
     this.game.load.image('duck', 'assets/duck.png');
     this.game.load.image('bread', 'assets/bread.png');
-    this.game.load.image('enemy', 'assets/enemy.png');
+    this.game.load.spritesheet('enemy', 'assets/enemy.png', 60, 139);
 }
 
 PreloadState.prototype.create = function(){

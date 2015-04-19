@@ -227,7 +227,7 @@ GameState.prototype.addDucks = function() {
 }
 
 GameState.prototype.addEnemies = function() {
-    var NUMBER_OF_ENEMIES = 10;
+    var NUMBER_OF_ENEMIES = 2;
     for(var i = 0; i < NUMBER_OF_ENEMIES; i++) {
 
         var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);

@@ -58,7 +58,7 @@ var Duck = function(game, target, optionalX, optionalY) {
     this.animations.add('e3', [2], 0, 1);
     this.animations.add('e4', [3], 0, 1);
 
-    this.animations.add('scared', [1], 8, 1);
+    this.animations.add('scared', [4,5,6], 8, 1);
 
     this.animationNames = ['e1','e2','e3','e4'];
 
@@ -84,7 +84,7 @@ Duck.prototype.update = function() {
         // If the distance > MIN_DISTANCE then move
         if (distance > Math.ceil(this.MIN_DISTANCE)) {
 
-            this.animations.play(this.animationNames[0]);
+            this.animations.play('scared');
 
             // Calculate the angle to the target
             var rotation = this.game.math.angleBetween(this.x, this.y, this.target.x + this.randomX, this.target.y + this.randomY);
@@ -118,7 +118,7 @@ Duck.prototype.roam = function() {
 
         if (distance > 6) {
 
-            this.animations.play(this.animationNames[0]);
+            this.animations.play('scared');
 
             // Calculate the angle to the target
             var rotation = this.game.math.angleBetween(this.x, this.y, this.zoneX, this.zoneY);
@@ -161,7 +161,7 @@ Duck.prototype.assignZone = function(x, y) {
 Duck.prototype.flee = function(x, y) {
     this.scared = true;
 
-    this.MAX_FOOD_SPEED = 500;
+    this.MAX_FOOD_SPEED = 100;
     this.animations.play('scared');
 
     this.hasOwner = false;

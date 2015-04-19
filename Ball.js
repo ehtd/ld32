@@ -17,6 +17,12 @@ var Ball = function(game, target, x, y, speed) {
     this.MAX_SPEED = speed;
 
     this.animations.add('rotate', [0,1,2,3], 16, 1);
+    var explode = this.animations.add('explode', [4,5,6,7,8], 16, false);
+
+    explode.onComplete.add(function(sprite, animation) {
+        //PLay sound
+        this.kill();
+    }, this);
 
     this.animations.play('rotate');
 
@@ -35,7 +41,7 @@ Ball.prototype.update = function() {
         this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_SPEED);
     } else {
         this.body.velocity.setTo(0, 0);
-        this.kill()
+        this.animations.play('explode');
     }
 
 };

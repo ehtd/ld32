@@ -49,7 +49,7 @@ Enemy.prototype.constructor = Enemy;
 Enemy.prototype.update = function() {
 
     this.game.physics.arcade.overlap(this.game.playerReference, this.attacks, function(player, ball){
-        ball.kill();
+        ball.animations.play('explode');
         this.game.playerReference.kill();
     }, null, this);
 

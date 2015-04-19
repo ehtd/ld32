@@ -3,7 +3,9 @@ var VERSION = "v. 0.1.0";
 var CONSTANT_STATES = {
     GAME:'GameState',
     BOOT:'BootState',
-    PRELOAD:'PreloadState'
+    PRELOAD:'PreloadState',
+    DEFEAT:'DefeatState',
+    START:'StartState'
 };
 
 versioning = function(game){

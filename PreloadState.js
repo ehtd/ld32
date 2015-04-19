@@ -27,5 +27,5 @@ PreloadState.prototype.create = function(){
     this.preloadBar.cropEnabled = false;
     console.log("Finish preload");
 
-    this.game.state.start(CONSTANT_STATES.GAME);
+    this.game.state.start(CONSTANT_STATES.START);
 }

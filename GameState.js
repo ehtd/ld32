@@ -52,6 +52,8 @@ GameState.prototype.create = function(){
     this.game.ducksReference = this.freeDucks;
     this.player.ducks = this.freeDucks;
 
+    this.player.gameReference = this.game;
+
     this.enemies = this.game.add.group();
 
     this.game.input.keyboard.addKeyCapture([
@@ -97,6 +99,8 @@ GameState.prototype.create = function(){
                 duck.flee();
             }
         });
+
+        player.gameReference.state.start(CONSTANT_STATES.DEFEAT);
     });
 
     versioning(this.game);

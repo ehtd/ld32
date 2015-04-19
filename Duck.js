@@ -31,6 +31,18 @@ var Duck = function(game, target, optionalX, optionalY) {
     this.randomX = this.game.rnd.integerInRange(-80, 80);
     this.randomY = this.game.rnd.integerInRange(-80, 80);
 
+    this.animations.add('e1', [0], 0, 1);
+    this.animations.add('e2', [1], 0, 1);
+    this.animations.add('e3', [2], 0, 1);
+    this.animations.add('e4', [3], 0, 1);
+
+    this.animationNames = ['e1','e2','e3','e4'];
+
+    this.pose = this.game.rnd.integerInRange(0, 3);
+    this.alternatePose = this.game.rnd.integerInRange(0, 3);
+
+    this.animations.play(this.animationNames[this.pose]);
+
 };
 
 Duck.prototype = Object.create(Phaser.Sprite.prototype);
@@ -45,6 +57,9 @@ Duck.prototype.update = function() {
 
         // If the distance > MIN_DISTANCE then move
         if (distance > Math.ceil(this.MIN_DISTANCE)) {
+
+            this.animations.play(this.animationNames[0]);
+
             // Calculate the angle to the target
             var rotation = this.game.math.angleBetween(this.x, this.y, this.target.x + this.randomX, this.target.y + this.randomY);
 
@@ -53,6 +68,8 @@ Duck.prototype.update = function() {
             this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_SPEED);
         } else {
             this.body.velocity.setTo(0, 0);
+            this.randomPose = this.game.rnd.integerInRange(0, 3);
+            this.animations.play(this.animationNames[this.alternatePose]);
         }
     } else { //A duck without owner
 
@@ -68,16 +85,24 @@ Duck.prototype.render = function() {
 
 Duck.prototype.roam = function() {
 
+
+
     if (this.zoneAssigned) {
         var distance = this.game.math.distance(this.x, this.y, this.zoneX, this.zoneY);
 
         if (distance > 6) {
+
+            this.animations.play(this.animationNames[0]);
+
             // Calculate the angle to the target
             var rotation = this.game.math.angleBetween(this.x, this.y, this.zoneX, this.zoneY);
 
             this.body.velocity.x = Math.ceil(Math.cos(rotation) * this.MAX_FOOD_SPEED);
             this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_FOOD_SPEED);
         } else {
+
+            this.randomPose = this.game.rnd.integerInRange(0, 3);
+            this.animations.play(this.animationNames[this.alternatePose]);
 
             this.body.velocity.setTo(0, 0);
             this.zoneX = 0;

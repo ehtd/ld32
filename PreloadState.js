@@ -9,7 +9,7 @@ PreloadState.prototype.preload = function(){
 
     this.game.load.image('background', 'assets/map.png');
     this.game.load.image('player', 'assets/player.png');
-    this.game.load.image('duck', 'assets/duck.png');
+    this.game.load.spritesheet('duck', 'assets/duck.png',10,10);
     this.game.load.image('bread', 'assets/bread.png');
     this.game.load.spritesheet('enemy', 'assets/enemy.png', 60, 139);
 }

@@ -34,6 +34,8 @@ GameState.prototype.create = function(){
 
     this.freeDucks = this.game.add.group();
 
+    this.enemies = this.game.add.group();
+
     this.game.input.keyboard.addKeyCapture([
         Phaser.Keyboard.W,
         Phaser.Keyboard.A,
@@ -46,6 +48,7 @@ GameState.prototype.create = function(){
     ]);
 
     this.addDucks();
+    this.addEnemies();
 
     this.game.input.onDown.add(this.dropBread, this);
 
@@ -57,6 +60,22 @@ GameState.prototype.update = function(){
     this.game.physics.arcade.overlap(this.freeDucks, this.breads, function(duck, bread){
         this.breads.remove(bread);
     }, null, this);
+
+    this.game.physics.arcade.overlap(this.freeDucks, this.enemies, function(duck, enemy){
+        if (duck.target != null) {
+            enemy.HP -= 1;
+
+            if (enemy.HP <= 0) {
+                this.enemies.remove(enemy);
+            }
+        }
+    }, null, this);
+
+    //this.game.physics.arcade.collide(this.freeDucks, function(duck){
+    //    if (duck.target != null) {
+    //        this.enemies.remove(enemy);
+    //    }
+    //}, null, this);
 
     if (this.input.keyboard.isDown(Phaser.Keyboard.W) || this.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 
@@ -97,6 +116,10 @@ GameState.prototype.render = function() {
     this.freeDucks.forEach(function(duck) {
         duck.render();
     });
+
+    this.enemies.forEach(function(enemy) {
+        enemy.render();
+    });
 }
 
 GameState.prototype.dropBread = function(pointer) {
@@ -122,5 +145,18 @@ GameState.prototype.addDucks = function() {
         var duck = new Duck(this.game, null, randomX, randomY);
         this.game.add.existing(duck);
         this.freeDucks.add(duck);
+    }
+}
+
+GameState.prototype.addEnemies = function() {
+    var NUMBER_OF_ENEMIES = 10;
+    for(var i = 0; i < NUMBER_OF_ENEMIES; i++) {
+
+        var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);
+        var randomY = this.game.rnd.integerInRange(6, this.game.world.bounds.height - 6);
+
+        var enemy = new Enemy(this.game, this.player, randomX, randomY, 40);
+        this.game.add.existing(enemy);
+        this.enemies.add(enemy);
     }
 }

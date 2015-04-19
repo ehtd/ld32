@@ -28,8 +28,29 @@ var Duck = function(game, target, optionalX, optionalY) {
     this.zoneAssigned = false;
     this.bread = null;
 
-    this.randomX = this.game.rnd.integerInRange(-80, 80);
-    this.randomY = this.game.rnd.integerInRange(-80, 80);
+    this.MIN_X = -80;
+    this.MAX_X = 80;
+
+    this.randomX = this.game.rnd.integerInRange(this.MIN_X, this.MAX_X);
+    this.randomY = this.game.rnd.integerInRange(this.MIN_X, this.MAX_X);
+
+    //Avoid edges
+    if ((this.randomX > (this.MAX_X - 20)) && (this.randomY > (this.MAX_X - 20))){
+        this.randomX -= this.game.rnd.integerInRange(20, 40);
+    }
+
+    if ((this.randomX < (this.MIN_X + 20)) && (this.randomY < (this.MIN_X + 20))){
+        this.randomX += this.game.rnd.integerInRange(20, 40);
+    }
+
+    if ((this.randomX < (this.MIN_X + 20)) && (this.randomY > (this.MAX_X - 20))){
+        this.randomY -= this.game.rnd.integerInRange(20, 40);
+    }
+
+    if ((this.randomX > (this.MAX_X - 20)) && (this.randomY < (this.MIN_X + 20))){
+        this.randomY += this.game.rnd.integerInRange(20, 40);
+    }
+
 
     this.animations.add('e1', [0], 0, 1);
     this.animations.add('e2', [1], 0, 1);

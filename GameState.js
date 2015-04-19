@@ -22,8 +22,24 @@ GameState.prototype.create = function(){
     this.player.body.immovable = false;
     this.player.body.collideWorldBounds = true;
 
+    this.player.throwingBread = false;
+
     this.player.animations.add('walk', [0,1,2,3], 8, 1);
     this.player.animations.add('stop', [0], 8, 1);
+    var breadAnimation = this.player.animations.add('bread', [4], 8, 0);
+
+    breadAnimation.onComplete.add(function(sprite, animation){
+        this.player.throwingBread = false;
+        this.player.animations.play('stop');
+    }, this);
+
+    var breadAnimationMoving = this.player.animations.add('breadMoving', [4,5,6,7], 16, 0);
+
+    breadAnimationMoving.onComplete.add(function(sprite, animation){
+        this.player.throwingBread = false;
+        this.player.animations.play('walk');
+    }, this);
+
     this.player.animations.play('stop');
 
     this.player.ducks = this.game.add.group();
@@ -130,9 +146,18 @@ GameState.prototype.update = function(){
     }
 
     if (this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0){
-        this.player.animations.play('walk');
+        if (this.player.throwingBread) {
+            this.player.animations.play('breadMoving');
+        } else {
+            this.player.animations.play('walk');
+        }
+
     } else {
-        this.player.animations.play('stop');
+        if (this.player.throwingBread) {
+            this.player.animations.play('bread');
+        } else {
+            this.player.animations.play('stop');
+        }
     }
 
     this.updateDuckStatus();
@@ -163,6 +188,8 @@ GameState.prototype.render = function() {
 
 GameState.prototype.dropBread = function(pointer) {
     var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
+
+    this.player.throwingBread = true;
 
     this.game.add.existing(bread);
     this.breads.add(bread);

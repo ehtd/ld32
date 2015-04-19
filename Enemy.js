@@ -38,12 +38,22 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
 
     this.attacking = false;
 
+    this.maxAttacks = 3;
+    this.attacks = this.game.add.group();
+
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
 Enemy.prototype.update = function() {
+
+    this.game.physics.arcade.overlap(this.game.playerReference, this.attacks, function(player, ball){
+        ball.kill();
+        this.game.playerReference.kill();
+        //TODO: END GAME
+
+    }, null, this);
 
     if (this.target != null) {
 
@@ -64,7 +74,7 @@ Enemy.prototype.update = function() {
                 this.body.velocity.setTo(0, 0);
                 this.attacking = true;
                 this.animations.play('attack');
-                //TODO: Perform attack
+                this.attack();
             }
 
         } else {
@@ -83,4 +93,14 @@ Enemy.prototype.render = function() {
     var hpBar = new Phaser.Rectangle(this.x - this.width, this.y + this.height/2 + 10 , barWidth, 4);
     //var circle = new Phaser.Circle(this.x, this.y, this.SEARCH_BREAD_DISTANCE*2 ) ;
     this.game.debug.geom( hpBar, 'rgba(255,0,0,0.3)' );
+}
+
+Enemy.prototype.attack = function() {
+
+    if (this.attacks.countLiving() < this.maxAttacks){
+        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 200);
+        this.game.add.existing(ball);
+        this.attacks.add(ball);
+    }
+
 }

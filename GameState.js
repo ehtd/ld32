@@ -187,17 +187,21 @@ GameState.prototype.render = function() {
 }
 
 GameState.prototype.dropBread = function(pointer) {
-    var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
 
-    this.player.throwingBread = true;
+    if (this.player.alive) {
+        var bread = new Bread(this.game, this.player, pointer.worldX, pointer.worldY);
 
-    this.game.add.existing(bread);
-    this.breads.add(bread);
-    this.player.bringToTop();
+        this.player.throwingBread = true;
 
-    this.freeDucks.forEach(function(duck) {
-        duck.assignZone(bread.x, bread.y);
-    });
+        this.game.add.existing(bread);
+        this.breads.add(bread);
+        this.player.bringToTop();
+
+        this.freeDucks.forEach(function(duck) {
+            duck.assignZone(bread.x, bread.y);
+        });
+    }
+
 }
 
 GameState.prototype.addDucks = function() {

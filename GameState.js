@@ -85,7 +85,11 @@ GameState.prototype.create = function(){
             }
         });
 
-        player.gameReference.state.start(CONSTANT_STATES.DEFEAT);
+        this.endGame = true;
+        player.gameReference.time.events.add(Phaser.Timer.SECOND * 2, function(){
+            player.gameReference.state.start(CONSTANT_STATES.DEFEAT);
+        }, this);
+
     });
 
     this.quackSound = this.game.add.audio('quack', 1, false);
@@ -100,15 +104,22 @@ GameState.prototype.create = function(){
     this.duckIndicator = this.game.add.bitmapText(30, 54, 'font', 'x '+this.myDucks, 20);
     this.duckIndicator.fixedToCamera = true;
 
+    this.endGame = false;
+
     versioning(this.game);
 }
 
 GameState.prototype.update = function(){
 
-    if (this.enemies.countLiving() == 0 ){
+    if (this.endGame) {
+        return;
+    }
 
-        //TODO: may want to delay the victory
-        this.game.state.start(CONSTANT_STATES.VICTORY);
+    if (this.enemies.countLiving() == 0 ){
+        this.endGame = true;
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, function(){
+            this.game.state.start(CONSTANT_STATES.VICTORY);
+        }, this);
         return;
     }
 

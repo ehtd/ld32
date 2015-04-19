@@ -38,7 +38,7 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
 
     this.attacking = false;
 
-    this.maxAttacks = 3;
+    this.maxAttacks = 10;
     this.attacks = this.game.add.group();
 
     this.overlapped = false;
@@ -108,7 +108,7 @@ Enemy.prototype.render = function() {
 Enemy.prototype.attack = function() {
 
     if (this.attacks.countLiving() < this.maxAttacks && this.game.playerReference.alive ){
-        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 40);
+        var ball = new Ball(this.game, this.game.playerReference, this.x, this.y, 120);
         this.game.add.existing(ball);
         this.attacks.add(ball);
     }

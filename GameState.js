@@ -104,6 +104,8 @@ GameState.prototype.create = function(){
     });
 
     this.quackSound = this.game.add.audio('quack', 1, false);
+    this.loop = this.game.add.audio('loop', 1, true);
+    this.loop.play();
 
     versioning(this.game);
 }
@@ -188,7 +190,7 @@ GameState.prototype.update = function(){
 }
 
 GameState.prototype.shutdown = function(){
-
+    this.loop.stop();
 }
 
 GameState.prototype.render = function() {
@@ -245,7 +247,7 @@ GameState.prototype.addDucks = function() {
 }
 
 GameState.prototype.addEnemies = function() {
-    var NUMBER_OF_ENEMIES = 2;
+    var NUMBER_OF_ENEMIES = 4;
     for(var i = 0; i < NUMBER_OF_ENEMIES; i++) {
 
         var randomX = this.game.rnd.integerInRange(6, this.game.world.bounds.width - 6);

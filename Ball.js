@@ -28,6 +28,8 @@ var Ball = function(game, target, x, y, speed) {
     this.animations.play('rotate');
 
     this.killed = this.game.add.audio('explode', 1, false);
+    this.zap = this.game.add.audio('zap', 1, false);
+    this.zap.play();
 
 };
 

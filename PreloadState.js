@@ -20,6 +20,8 @@ PreloadState.prototype.preload = function(){
 
     this.game.load.audio('explode', 'music/explode.mp3');
     this.game.load.audio('quack', 'music/quack.mp3');
+    this.game.load.audio('zap', 'music/zap.mp3');
+    this.game.load.audio('loop', 'music/loop.mp3');
 
 }
 

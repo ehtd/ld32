@@ -22,11 +22,22 @@ var Enemy = function(game, target, optionalX, optionalY, speed) {
 
     this.MAX_SPEED = speed;
     this.MIN_DISTANCE = 4;
+    this.MIN_DISTANCE_ATTACK = 200;
     this.MAX_HP = 100000;
     this.HP = this.MAX_HP;
 
     this.animations.add('walk', [0,1,2,3], 8, 1);
+    var attackAnimation = this.animations.add('attack', [0], 8, false);
+
+    attackAnimation.onComplete.add(function(sprite, animation){
+        this.attacking = false;
+        this.animations.play('walk');
+    }, this);
+
     this.animations.play('walk');
+
+    this.attacking = false;
+
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -41,18 +52,26 @@ Enemy.prototype.update = function() {
 
         // If the distance > MIN_DISTANCE then move
         if (distance > Math.ceil(this.MIN_DISTANCE)) {
-            // Calculate the angle to the target
-            var rotation = this.game.math.angleBetween(this.x, this.y, this.target.x, this.target.y);
 
-            // Calculate velocity vector based on rotation and this.MAX_SPEED
-            this.body.velocity.x = Math.ceil(Math.cos(rotation) * this.MAX_SPEED);
-            this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_SPEED);
+            if (this.attacking == false) { // Continue chasing target
+                var rotation = this.game.math.angleBetween(this.x, this.y, this.target.x, this.target.y);
+                this.body.velocity.x = Math.ceil(Math.cos(rotation) * this.MAX_SPEED);
+                this.body.velocity.y = Math.ceil(Math.sin(rotation) * this.MAX_SPEED);
+                this.animations.play('walk');
+            }
+
+            if (distance < this.MIN_DISTANCE_ATTACK) {
+                this.body.velocity.setTo(0, 0);
+                this.attacking = true;
+                this.animations.play('attack');
+                //TODO: Perform attack
+            }
+
         } else {
             this.body.velocity.setTo(0, 0);
         }
     } else {
 
-        //this.roam();
     }
 
 };
